@@ -9,11 +9,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="426.0" prefWidth="885.0" style="-fx-background-color: #ffa100;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ap.mni.controllers.StockController">
+<AnchorPane prefHeight="308.0" prefWidth="869.0" style="-fx-background-color: #0d0943;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ap.mni.controllers.StockController">
 
     <children>
 
-        <Label layoutX="252.0" layoutY="25.0" text="Stock Management" textFill="#0d0943">
+        <Label layoutX="252.0" layoutY="25.0" text="Stock Management" textFill="#ffa100">
             <font>
                 <Font name="Calisto MT Bold" size="30.0" />
             </font>
@@ -34,17 +34,17 @@
         <AnchorPane layoutX="35.0" layoutY="80.0" prefHeight="300.0" prefWidth="350.0">
             <children>
 
-                <Label layoutX="10.0" layoutY="50.0" text="Product ID:" textFill="#0d0943" />
+                <Label layoutX="10.0" layoutY="50.0" text="Product ID:" textFill="#ffa100" />
                 <TextField fx:id="productIdField" layoutX="120.0" layoutY="45.0" prefWidth="150.0" />
 
 
-                <Label layoutX="10.0" layoutY="90.0" text="Product Name:" textFill="#0d0943" />
+                <Label layoutX="10.0" layoutY="90.0" text="Product Name:" textFill="#ffa100" />
                 <TextField fx:id="productNameField" layoutX="120.0" layoutY="85.0" prefWidth="150.0" />
 
 
-                <Label layoutX="10.0" layoutY="130.0" text="Quantity:" textFill="#0d0943" />
+                <Label layoutX="10.0" layoutY="130.0" text="Quantity:" textFill="#ffa100" />
                 <TextField fx:id="quantityField" layoutX="120.0" layoutY="125.0" prefWidth="150.0" />
-                <Label layoutX="10.0" layoutY="170.0" text="Price:" textFill="#0d0943" />
+                <Label layoutX="10.0" layoutY="170.0" text="Price:" textFill="#ffa100" />
                 <Slider fx:id="priceSlider" layoutX="120.0" layoutY="171.0" majorTickUnit="5.0" min="0" showTickLabels="true" showTickMarks="true" />
                 <Button fx:id="addStockBtn" layoutX="20.0" layoutY="250.0" text="Add Item" />
                 <Button fx:id="removeStockBtn" layoutX="120.0" layoutY="250.0" text="Remove Item" />

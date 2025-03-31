@@ -18,7 +18,7 @@
         </Label>
 
 
-        <TableView fx:id="salesTable" layoutX="374.0" layoutY="68.0" prefHeight="255.0" prefWidth="436.0">
+        <TableView fx:id="salesTable" layoutX="374.0" layoutY="68.0" prefHeight="269.0" prefWidth="483.0">
             <columns>
                 <TableColumn fx:id="productNameColumn" prefWidth="115.20001220703125" text="Product Name" />
                 <TableColumn fx:id="quantityColumn" prefWidth="100.0" text="Quantity" />
