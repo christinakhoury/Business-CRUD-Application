@@ -47,7 +47,7 @@
                </font></Label>
                 <TextField fx:id="ageField" layoutX="100.0" layoutY="125.0" prefWidth="150.0" />
 
-                <Label layoutX="10.0" layoutY="170.0" text="Gender:" textFill="#0d0943" />
+                <Label layoutX="10.0" layoutY="170.0" text="Gender:" textFill="#ffa100" />
                 <RadioButton fx:id="maleRadio" layoutX="100.0" layoutY="170.0" text="Male" textFill="#ffa100" />
                 <RadioButton fx:id="femaleRadio" layoutX="160.0" layoutY="170.0" text="Female" textFill="#ffa100" />
 
