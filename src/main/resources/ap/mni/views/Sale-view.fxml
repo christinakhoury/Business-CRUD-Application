@@ -8,10 +8,10 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="417.0" prefWidth="830.0" style="-fx-background-color: #ffa100;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ap.mni.controllers.SalesAndOffersController">
+<AnchorPane prefHeight="417.0" prefWidth="830.0" style="-fx-background-color: #0d0943;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ap.mni.controllers.SalesAndOffersController">
 
     <children>
-        <Label layoutX="230.0" layoutY="20.0" text="Sales &amp; Offers Management" textFill="#0d0943">
+        <Label layoutX="230.0" layoutY="20.0" text="Sales &amp; Offers Management" textFill="#ffa100">
             <font>
                 <Font name="Calisto MT Bold" size="28.0" />
             </font>
@@ -30,19 +30,19 @@
 
         <AnchorPane layoutX="14.0" layoutY="58.0" prefHeight="365.0" prefWidth="380.0">
             <children>
-                <Label layoutX="10.0" layoutY="50.0" text="Product Name:" textFill="#0d0943">
+                <Label layoutX="10.0" layoutY="50.0" text="Product Name:" textFill="#ffa100">
                <font>
                   <Font size="14.0" />
                </font></Label>
                 <TextField fx:id="productNameField" layoutX="140.0" layoutY="45.0" prefWidth="150.0" />
 
-                <Label layoutX="10.0" layoutY="90.0" text="Quantity:" textFill="#0d0943">
+                <Label layoutX="10.0" layoutY="90.0" text="Quantity:" textFill="#ffa100">
                <font>
                   <Font size="14.0" />
                </font></Label>
                 <TextField fx:id="quantityField" layoutX="140.0" layoutY="85.0" prefWidth="150.0" />
 
-                <Label layoutX="10.0" layoutY="130.0" text="Price:" textFill="#0d0943">
+                <Label layoutX="10.0" layoutY="130.0" text="Price:" textFill="#ffa100">
                <font>
                   <Font size="14.0" />
                </font></Label>
