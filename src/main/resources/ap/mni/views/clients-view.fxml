@@ -9,10 +9,10 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="800.0" style="-fx-background-color: ffa100;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ap.mni.controllers.ClientsController">
+<AnchorPane prefHeight="400.0" prefWidth="800.0" style="-fx-background-color: #0d0943;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ap.mni.controllers.ClientsController">
 
     <children>
-        <Label layoutX="252.0" layoutY="25.0" text="Clients Management" textFill="#0d0943">
+        <Label layoutX="252.0" layoutY="25.0" text="Clients Management" textFill="#ffa100">
             <font>
                 <Font name="Calisto MT Bold" size="30.0" />
             </font>
@@ -20,27 +20,36 @@
 
         <TableView fx:id="clientsTable" layoutX="363.0" layoutY="80.0" prefHeight="269.0" prefWidth="483.0">
             <columns>
-                <TableColumn fx:id="idColumn" prefWidth="90" text="ID" />
-                <TableColumn fx:id="nameColumn" prefWidth="120" text="Name" />
-                <TableColumn fx:id="ageColumn" prefWidth="80" text="Age" />
-                <TableColumn fx:id="genderColumn" prefWidth="90" text="Gender" />
+                <TableColumn fx:id="idColumn" prefWidth="103.20001220703125" text="ID" />
+                <TableColumn fx:id="nameColumn" prefWidth="106.4000244140625" text="Name" />
+                <TableColumn fx:id="ageColumn" prefWidth="148.7999267578125" text="Age" />
+                <TableColumn fx:id="genderColumn" prefWidth="126.4000244140625" text="Gender" />
             </columns>
         </TableView>
 
         <AnchorPane layoutX="20.0" layoutY="80.0" prefHeight="300.0" prefWidth="350.0">
             <children>
-                <Label layoutX="10.0" layoutY="50.0" text="ID:" textFill="#0d0943" />
+                <Label layoutX="10.0" layoutY="50.0" text="ID:" textFill="#ffa100">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
                 <TextField fx:id="idField" layoutX="100.0" layoutY="45.0" prefWidth="150.0" />
 
-                <Label layoutX="10.0" layoutY="90.0" text="Name:" textFill="#0d0943" />
+                <Label layoutX="10.0" layoutY="90.0" text="Name:" textFill="#ffa100">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
                 <TextField fx:id="nameField" layoutX="100.0" layoutY="85.0" prefWidth="150.0" />
 
-                <Label layoutX="10.0" layoutY="130.0" text="Age:" textFill="#0d0943" />
+                <Label layoutX="10.0" layoutY="130.0" text="Age:" textFill="#ffa100">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
                 <TextField fx:id="ageField" layoutX="100.0" layoutY="125.0" prefWidth="150.0" />
 
                 <Label layoutX="10.0" layoutY="170.0" text="Gender:" textFill="#0d0943" />
-                <RadioButton fx:id="maleRadio" layoutX="100.0" layoutY="170.0" text="Male" />
-                <RadioButton fx:id="femaleRadio" layoutX="160.0" layoutY="170.0" text="Female" />
+                <RadioButton fx:id="maleRadio" layoutX="100.0" layoutY="170.0" text="Male" textFill="#ffa100" />
+                <RadioButton fx:id="femaleRadio" layoutX="160.0" layoutY="170.0" text="Female" textFill="#ffa100" />
 
                 <Button fx:id="addClientBtn" layoutX="20.0" layoutY="250.0" text="Add Client" />
                 <Button fx:id="removeClientBtn" layoutX="120.0" layoutY="250.0" text="Remove Client" />
