@@ -23,50 +23,39 @@
 
         <TableView fx:id="ordersTable" layoutX="377.0" layoutY="80.0" prefHeight="269.0" prefWidth="483.0">
             <columns>
-                <TableColumn fx:id="orderIdColumn" prefWidth="109.60003662109375" text="Order ID" />
-                <TableColumn fx:id="clientNameColumn" prefWidth="115.20001220703125" text="Client Name" />
-                <TableColumn fx:id="totalPriceColumn" prefWidth="114.40008544921875" text="Total Price" />
-                <TableColumn fx:id="statusColumn" prefWidth="143.20001220703125" text="Status" />
+                <TableColumn fx:id="orderIdColumn" prefWidth="109.6" text="Order ID" />
+                <TableColumn fx:id="clientNameColumn" prefWidth="115.2" text="Client Name" />
+                <TableColumn fx:id="totalPriceColumn" prefWidth="114.4" text="Total Price" />
+                <TableColumn fx:id="statusColumn" prefWidth="143.2" text="Status" />
             </columns>
-         <columnResizePolicy>
-            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-         </columnResizePolicy>
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+            </columnResizePolicy>
         </TableView>
 
         <AnchorPane layoutX="20.0" layoutY="80.0" prefHeight="300.0" prefWidth="350.0">
             <children>
                 <Label layoutX="10.0" layoutY="50.0" text="Order ID:" textFill="#ffa100">
-               <font>
-                  <Font size="14.0" />
-               </font></Label>
+                    <font><Font size="14.0" /></font>
+                </Label>
                 <TextField fx:id="orderIdField" layoutX="120.0" layoutY="45.0" prefWidth="150.0" />
 
                 <Label layoutX="10.0" layoutY="90.0" text="Client Name:" textFill="#ffa100">
-               <font>
-                  <Font size="14.0" />
-               </font></Label>
+                    <font><Font size="14.0" /></font>
+                </Label>
                 <TextField fx:id="clientNameField" layoutX="120.0" layoutY="85.0" prefWidth="150.0" />
 
                 <Label layoutX="10.0" layoutY="130.0" text="Total Price:" textFill="#ffa100">
-               <font>
-                  <Font size="14.0" />
-               </font></Label>
+                    <font><Font size="14.0" /></font>
+                </Label>
                 <TextField fx:id="totalPriceField" layoutX="120.0" layoutY="125.0" prefWidth="150.0" />
 
                 <Label layoutX="10.0" layoutY="170.0" text="Status:" textFill="#ffa100">
-               <font>
-                  <Font size="14.0" />
-               </font></Label>
-                <ComboBox fx:id="statusComboBox" layoutX="120.0" layoutY="165.0" prefWidth="150.0">
-                    <items>
-                        <FXCollections fx:factory="observableArrayList">
-                            <String fx:value="Pending" />
-                            <String fx:value="Shipped" />
-                            <String fx:value="Delivered" />
-                            <String fx:value="Canceled" />
-                        </FXCollections>
-                    </items>
-                </ComboBox>
+                    <font><Font size="14.0" /></font>
+                </Label>
+
+                <!-- 🧼 Clean ComboBox — No hardcoded items -->
+                <ComboBox fx:id="statusComboBox" layoutX="120.0" layoutY="165.0" prefWidth="150.0" />
 
                 <Button fx:id="addOrderBtn" layoutX="20.0" layoutY="250.0" text="Add Order" />
                 <Button fx:id="removeOrderBtn" layoutX="120.0" layoutY="250.0" text="Remove Order" />
