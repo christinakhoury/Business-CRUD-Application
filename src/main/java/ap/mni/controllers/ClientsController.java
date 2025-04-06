@@ -77,25 +77,31 @@ public class ClientsController {
             return;
         }
 
+        // Check for duplicate ID (new validation)
+        for (Client client : clientsList) {
+            if (client.getId().equals(id)) {
+                showAlert("Error", "ID must be unique! This ID already exists.", Alert.AlertType.ERROR);
+                return;
+            }
+        }
+
         int age = Integer.parseInt(ageText);
         String gender = selectedGender.getText();
 
         Client newClient = new Client(id, name, age, gender);
         clientsList.add(newClient);
 
-
         idField.clear();
         nameField.clear();
         ageField.clear();
         genderGroup.selectToggle(null);
     }
-
     private void removeSelectedClient() {
         Client selectedClient = clientsTable.getSelectionModel().getSelectedItem();
         if (selectedClient != null) {
             clientsList.remove(selectedClient);
         } else {
-            showAlert("Warning", "No client selected!", Alert.AlertType.WARNING);
+            showAlert("Warning", "No client was selected!", Alert.AlertType.WARNING);
         }
     }
 
