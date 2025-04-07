@@ -12,13 +12,13 @@
 <AnchorPane prefHeight="400.0" prefWidth="800.0" style="-fx-background-color: #0d0943;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ap.mni.controllers.ClientsController">
 
     <children>
-        <Label layoutX="252.0" layoutY="25.0" text="Clients Management" textFill="#ffa100">
+        <Label layoutX="272.0" layoutY="25.0" text="Clients Management" textFill="#ffa100">
             <font>
                 <Font name="Calisto MT Bold" size="30.0" />
             </font>
         </Label>
 
-        <TableView fx:id="clientsTable" layoutX="363.0" layoutY="80.0" prefHeight="269.0" prefWidth="483.0">
+        <TableView fx:id="clientsTable" layoutX="347.0" layoutY="80.0" prefHeight="269.0" prefWidth="483.0">
             <columns>
                 <TableColumn fx:id="idColumn" prefWidth="103.20001220703125" text="ID" />
                 <TableColumn fx:id="nameColumn" prefWidth="106.4000244140625" text="Name" />
@@ -29,7 +29,7 @@
 
         <AnchorPane layoutX="20.0" layoutY="80.0" prefHeight="300.0" prefWidth="350.0">
             <children>
-                <Label layoutX="10.0" layoutY="50.0" text="ID:" textFill="#ffa100">
+                <Label layoutX="10.0" layoutY="50.0" text="ID:" textFill="#ffa100" AnchorPane.bottomAnchor="229.6" AnchorPane.topAnchor="50.0">
                <font>
                   <Font size="14.0" />
                </font></Label>
