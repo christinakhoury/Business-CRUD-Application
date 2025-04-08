@@ -86,7 +86,7 @@ public class SalesAndOffersController {
         if (selectedSaleItem != null) {
             salesList.remove(selectedSaleItem);
         } else {
-            showAlert("Warning", "No item selected!", Alert.AlertType.WARNING);
+            showAlert("Warningg", "No item selected!", Alert.AlertType.WARNING);
         }
     }
 
