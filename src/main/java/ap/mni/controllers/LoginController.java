@@ -26,6 +26,7 @@ public class LoginController {
         put("Charbel", "C321");
         put("Michael", "M123");
         put("Jimmy", "J123");
+       
     }};
 
     @FXML
