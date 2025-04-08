@@ -25,7 +25,7 @@ public class LoginController {
         put("Christina", "C123");
         put("Charbel", "C321");
         put("Michael", "M123");
-        put("Jimmy", "J123");
+        put("Jimmy", "J1234");
 
         
        
