@@ -16,7 +16,7 @@
                   <Image url="@../images/im.jpg" />
                </image>
             </ImageView>
-            <Label layoutX="45.0" layoutY="261.0" text="Company Managment" textFill="#0d0943f0">
+            <Label layoutX="45.0" layoutY="261.0" text="Company Management" textFill="#0d0943f0">
                <font>
                   <Font name="Book Antiqua" size="22.0" />
                </font>
@@ -25,29 +25,27 @@
       </AnchorPane>
       <AnchorPane layoutX="290.0" prefHeight="407.0" prefWidth="290.0" style="-fx-background-color: #0d0943;">
          <children>
-
             <Button fx:id="salesAndOffering" layoutX="69.0" layoutY="149.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="162.0" text="Sales &amp; Offering" textAlignment="CENTER" textFill="#0d0943" onAction="#openSalesAndOffersManagement">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
             <Button fx:id="orderManagment" layoutX="69.0" layoutY="86.0" mnemonicParsing="false" onAction="#openOrderManagement" prefHeight="34.0" prefWidth="162.0" text="Order Managment" textFill="#0d0943">
-
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="stockManagment" layoutX="69.0" layoutY="213.0" mnemonicParsing="false"  prefHeight="34.0" prefWidth="162.0" text="Stock Managment" textFill="#0d0943" onAction ="#openStockManagement">
+            <Button fx:id="stockManagment" layoutX="69.0" layoutY="213.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="162.0" text="Stock Managment" textFill="#0d0943" onAction="#openStockManagement">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="customerM" layoutX="69.0" layoutY="277.0" mnemonicParsing="false" onAction="#customerM" prefHeight="34.0" prefWidth="162.0" text="Customer Management" textFill="#0d0943">   <font>
+            <Button fx:id="customerM" layoutX="69.0" layoutY="277.0" mnemonicParsing="false" onAction="#customerM" prefHeight="34.0" prefWidth="162.0" text="Customer Management" textFill="#0d0943">
+               <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
          </children>
       </AnchorPane>
    </children>
-
 </AnchorPane>

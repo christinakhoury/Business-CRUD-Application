@@ -6,9 +6,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import ap.mni.controllers.DBConnection;
+
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class LoginController {
 
@@ -21,23 +25,17 @@ public class LoginController {
     @FXML
     private Label errorLabel;
 
-    private final Map<String, String> users = new HashMap<>() {{
-        put("Christina", "C123");
-        put("Charbel", "C321");
-        put("Michael", "M123");
-        put("Jimmy", "J1234");
-
-        
-       
-
-    }};
-
     @FXML
     private void handleLogin(ActionEvent event) {
-        String username = usernameField.getText();
-        String password = passwordField.getText();
+        String username = usernameField.getText().trim();
+        String password = passwordField.getText().trim();
 
-        if (users.containsKey(username) && users.get(username).equals(password)) {
+        if (username.isEmpty() || password.isEmpty()) {
+            errorLabel.setText("Please enter both username and password.");
+            return;
+        }
+
+        if (isValidUser(username, password)) {
             try {
                 CRUDApp.showHomeView();
             } catch (IOException e) {
@@ -45,6 +43,24 @@ public class LoginController {
             }
         } else {
             errorLabel.setText("Invalid username or password!");
+        }
+    }
+
+    private boolean isValidUser(String username, String password) {
+        String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, username);
+            stmt.setString(2, password);
+
+            ResultSet rs = stmt.executeQuery();
+            return rs.next(); // user exists if result set has a row
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 }

@@ -1,10 +1,13 @@
 package ap.mni;
 
+import ap.mni.models.Person;
+import ap.mni.models.PersonsStore;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 
 public class CRUDApp extends Application {
@@ -16,7 +19,6 @@ public class CRUDApp extends Application {
         primaryStage = stage;
         showLoginView();
     }
-
 
     private void showLoginView() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ap/mni/views/login-view.fxml"));
@@ -30,7 +32,6 @@ public class CRUDApp extends Application {
         primaryStage.show();
     }
 
-
     public static void showHomeView() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(CRUDApp.class.getResource("/ap/mni/views/home-view.fxml"));
         AnchorPane root = fxmlLoader.load();
@@ -42,7 +43,8 @@ public class CRUDApp extends Application {
         primaryStage.show();
     }
 
+    // 🔽 This main is for JDBC testing. You can comment it out if you only want to run JavaFX.
     public static void main(String[] args) {
-        launch(args);
+        launch(args);  // 👈 This runs the JavaFX UI
     }
-}
+}    

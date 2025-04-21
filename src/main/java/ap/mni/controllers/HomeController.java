@@ -1,4 +1,5 @@
 package ap.mni.controllers;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,18 +18,15 @@ public class HomeController {
 
     @FXML
     private Button customerM;
+
     @FXML
     private Button salesAndOffering;
 
     @FXML
     void openOrderManagement(ActionEvent event) throws IOException {
-        openWindow("/ap/mni/views/OrderView.fxml", "Order Management");}
-
-
-    @FXML
-    void stockManagment(ActionEvent event) throws IOException {
-        openWindow("/ap/mni/views/stock-view.fxml", "Stock Management");
+        openWindow("/ap/mni/views/OrderView.fxml", "Order Management");
     }
+
     @FXML
     void openStockManagement(ActionEvent event) throws IOException {
         openWindow("/ap/mni/views/stock-view.fxml", "Stock Management");
@@ -44,8 +42,6 @@ public class HomeController {
         openWindow("/ap/mni/views/Sale-view.fxml", "Sales and Offering");
     }
 
-
-
     private void openWindow(String fxmlPath, String title) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlPath));
         Scene scene = new Scene(fxmlLoader.load(), 900, 600);
@@ -56,7 +52,4 @@ public class HomeController {
         stage.setMaximized(false);
         stage.show();
     }
-
-
-
 }

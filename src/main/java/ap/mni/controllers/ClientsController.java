@@ -1,10 +1,15 @@
 package ap.mni.controllers;
 
 import ap.mni.models.Client;
+import ap.mni.controllers.DBConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class ClientsController {
 
@@ -43,11 +48,9 @@ public class ClientsController {
 
     @FXML
     public void initialize() {
-
         genderGroup = new ToggleGroup();
         maleRadio.setToggleGroup(genderGroup);
         femaleRadio.setToggleGroup(genderGroup);
-
 
         idColumn.setCellValueFactory(cellData -> cellData.getValue().idProperty());
         nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
@@ -81,27 +84,73 @@ public class ClientsController {
         String gender = selectedGender.getText();
 
         Client newClient = new Client(id, name, age, gender);
-        clientsList.add(newClient);
 
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(
+                     "INSERT INTO clients (id, name, age, gender) VALUES (?, ?, ?, ?)"
+             )) {
+            stmt.setInt(1, Integer.parseInt(id));
+            stmt.setString(2, name);
+            stmt.setInt(3, age);
+            stmt.setString(4, gender);
+            stmt.executeUpdate();
 
-        idField.clear();
-        nameField.clear();
-        ageField.clear();
-        genderGroup.selectToggle(null);
+            clientsList.add(newClient);
+
+            idField.clear();
+            nameField.clear();
+            ageField.clear();
+            genderGroup.selectToggle(null);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert("Error", "Failed to insert into database.", Alert.AlertType.ERROR);
+        }
     }
 
     private void removeSelectedClient() {
         Client selectedClient = clientsTable.getSelectionModel().getSelectedItem();
         if (selectedClient != null) {
-            clientsList.remove(selectedClient);
+            try (Connection conn = DBConnection.getConnection();
+                 PreparedStatement stmt = conn.prepareStatement("DELETE FROM clients WHERE id = ?")) {
+    
+                stmt.setInt(1, Integer.parseInt(selectedClient.getId()));
+                int affectedRows = stmt.executeUpdate();
+    
+                if (affectedRows > 0) {
+                    clientsList.remove(selectedClient);
+                } else {
+                    showAlert("Error", "Client not found in database.", Alert.AlertType.ERROR);
+                }
+    
+            } catch (SQLException e) {
+                e.printStackTrace();
+                showAlert("Error", "Failed to delete from database.", Alert.AlertType.ERROR);
+            }
         } else {
             showAlert("Warning", "No client selected!", Alert.AlertType.WARNING);
         }
     }
+    
 
     private void clearTable() {
-        clientsList.clear();
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement("DELETE FROM clients")) {
+    
+            int affectedRows = stmt.executeUpdate();
+    
+            if (affectedRows >= 0) {
+                clientsList.clear(); // Clear the table view after DB success
+            } else {
+                showAlert("Error", "Failed to clear database table.", Alert.AlertType.ERROR);
+            }
+    
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert("Error", "Database error while clearing table.", Alert.AlertType.ERROR);
+        }
     }
+    
 
     private void showAlert(String title, String message, Alert.AlertType type) {
         Alert alert = new Alert(type);

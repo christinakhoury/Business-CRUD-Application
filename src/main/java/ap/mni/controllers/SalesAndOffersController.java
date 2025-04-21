@@ -5,6 +5,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import ap.mni.controllers.DBConnection;
+
+import java.sql.*;
 
 public class SalesAndOffersController {
 
@@ -37,17 +40,18 @@ public class SalesAndOffersController {
 
     @FXML
     public void initialize() {
-
         productNameColumn.setCellValueFactory(cellData -> cellData.getValue().productNameProperty());
         quantityColumn.setCellValueFactory(cellData -> cellData.getValue().quantityProperty().asObject());
         priceColumn.setCellValueFactory(cellData -> cellData.getValue().priceProperty().asObject());
         finalPriceColumn.setCellValueFactory(cellData -> cellData.getValue().finalPriceProperty().asObject());
 
-
         salesTable.setItems(salesList);
+
         addSaleBtn.setOnAction(event -> addSaleItem());
         removeSaleBtn.setOnAction(event -> removeSelectedSaleItem());
         clearTableBtn.setOnAction(event -> clearTable());
+
+        loadSalesFromDatabase();
     }
 
     private void addSaleItem() {
@@ -68,36 +72,108 @@ public class SalesAndOffersController {
         int quantity = Integer.parseInt(quantityText);
         double price = Double.parseDouble(priceText);
 
-
         double discountRate = (quantity < 5) ? 0.2 : (quantity < 50) ? 0.4 : 0.6;
         double finalPrice = price * discountRate;
 
-        SaleItem newSaleItem = new SaleItem(productName, quantity, price, finalPrice);
-        salesList.add(newSaleItem);
+        SaleItem newSale = new SaleItem(productName, quantity, price, finalPrice);
 
+        String sql = "INSERT INTO sales (product_name, quantity, price, final_price) VALUES (?, ?, ?, ?)";
 
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, productName);
+            stmt.setInt(2, quantity);
+            stmt.setDouble(3, price);
+            stmt.setDouble(4, finalPrice);
+            stmt.executeUpdate();
+
+            salesList.add(newSale);
+            clearForm();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert("Error", "Failed to insert into database.\n" + e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
+
+    private void removeSelectedSaleItem() {
+        SaleItem selected = salesTable.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            showAlert("Warning", "No item selected!", Alert.AlertType.WARNING);
+            return;
+        }
+
+        String sql = "DELETE FROM sales WHERE product_name = ? AND quantity = ? AND price = ? LIMIT 1";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, selected.getProductName());
+            stmt.setInt(2, selected.getQuantity());
+            stmt.setDouble(3, selected.getPrice());
+
+            int affected = stmt.executeUpdate();
+            if (affected > 0) {
+                salesList.remove(selected);
+            } else {
+                showAlert("Info", "Item not found in database.", Alert.AlertType.INFORMATION);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert("Error", "Failed to delete from database.", Alert.AlertType.ERROR);
+        }
+    }
+
+    private void clearTable() {
+        String sql = "DELETE FROM sales";
+
+        try (Connection conn = DBConnection.getConnection();
+             Statement stmt = conn.createStatement()) {
+
+            stmt.executeUpdate(sql);
+            salesList.clear();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert("Error", "Database error while clearing table.", Alert.AlertType.ERROR);
+        }
+    }
+
+    private void loadSalesFromDatabase() {
+        salesList.clear();
+        String sql = "SELECT * FROM sales";
+
+        try (Connection conn = DBConnection.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                String name = rs.getString("product_name");
+                int quantity = rs.getInt("quantity");
+                double price = rs.getDouble("price");
+                double finalPrice = rs.getDouble("final_price");
+
+                salesList.add(new SaleItem(name, quantity, price, finalPrice));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void clearForm() {
         productNameField.clear();
         quantityField.clear();
         priceField.clear();
     }
 
-    private void removeSelectedSaleItem() {
-        SaleItem selectedSaleItem = salesTable.getSelectionModel().getSelectedItem();
-        if (selectedSaleItem != null) {
-            salesList.remove(selectedSaleItem);
-        } else {
-            showAlert("Warningg", "No item selected!", Alert.AlertType.WARNING);
-        }
-    }
-
-    private void clearTable() {
-        salesList.clear();
-    }
-
-    private void showAlert(String title, String message, Alert.AlertType type) {
+    private void showAlert(String title, String msg, Alert.AlertType type) {
         Alert alert = new Alert(type);
         alert.setTitle(title);
-        alert.setContentText(message);
-        alert.show();
+        alert.setHeaderText(null);
+        alert.setContentText(msg);
+        alert.showAndWait();
     }
 }
