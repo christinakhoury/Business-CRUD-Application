@@ -43,8 +43,8 @@ public class CRUDApp extends Application {
         primaryStage.show();
     }
 
-    // 🔽 This main is for JDBC testing. You can comment it out if you only want to run JavaFX.
+    //  This main is for JDBC testing. You can comment it out if you only want to run JavaFX.
     public static void main(String[] args) {
-        launch(args);  // 👈 This runs the JavaFX UI
+        launch(args);
     }
-}    
+}

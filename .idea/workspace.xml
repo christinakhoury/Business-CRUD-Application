@@ -6,7 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="83875c7d-fba6-4358-847f-1da1962c9fc0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/ap/mni/views/clients-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/ap/mni/views/clients-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ap/mni/CRUDApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ap/mni/CRUDApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ap/mni/controllers/DBConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ap/mni/controllers/DBConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ap/mni/controllers/StockController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ap/mni/controllers/StockController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ap/mni/models/StockItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ap/mni/models/StockItem.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,26 +53,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.CRUDApp.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Lenovo/AppData/Local/SceneBuilder/SceneBuilder.exe",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.47586206",
-    "settings.editor.selected.configurable": "vcs.Git",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.CRUDApp.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Lenovo/Desktop/mysql-connector-j-9.3.0/mysql-connector-j-9.3.0.jar&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.47586206&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Git&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -87,6 +90,9 @@
       <option name="presentableId" value="Default" />
       <updated>1743436344395</updated>
       <workItem from="1743436352285" duration="11717000" />
+      <workItem from="1745486752498" duration="842000" />
+      <workItem from="1745488093371" duration="1598000" />
+      <workItem from="1746264237670" duration="15429000" />
     </task>
     <servers />
   </component>
