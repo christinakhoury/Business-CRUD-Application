@@ -18,7 +18,7 @@ public class OrderController {
     @FXML
     private TableColumn<Order, String> orderIdColumn;
     @FXML
-    private TableColumn<Order, String> clientNameColumn;
+    private TableColumn<Order, String> clientNameColumn;//erye5yw45b46h546
     @FXML
     private TableColumn<Order, Double> totalPriceColumn;
     @FXML
