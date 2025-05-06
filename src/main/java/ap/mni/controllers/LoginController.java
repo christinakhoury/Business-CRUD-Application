@@ -17,50 +17,50 @@ import java.sql.SQLException;
 public class LoginController {
 
     @FXML
-    private TextField usernameField;
-
+    private TextField usernameField;  // Username input field
+    
     @FXML
-    private PasswordField passwordField;
-
+    private PasswordField passwordField;  // Password input field
+    
     @FXML
-    private Label errorLabel;
-
+    private Label errorLabel;  // Error message display
+    
     @FXML
-    private void handleLogin(ActionEvent event) {
-        String username = usernameField.getText().trim();
-        String password = passwordField.getText().trim();
-
-        if (username.isEmpty() || password.isEmpty()) {
-            errorLabel.setText("Please enter both username and password.");
-            return;
+    private void handleLogin(ActionEvent event) {  // Process login attempt
+        String username = usernameField.getText().trim();  // Get username input
+        String password = passwordField.getText().trim();  // Get password input
+        
+        if (username.isEmpty() || password.isEmpty()) {  // Check empty fields
+            errorLabel.setText("Please enter both username and password.");  // Show validation message
+            return;  // Stop execution
         }
-
-        if (isValidUser(username, password)) {
+        
+        if (isValidUser(username, password)) {  // Validate user credentials
             try {
-                CRUDApp.showHomeView();
-            } catch (IOException e) {
-                e.printStackTrace();
+                CRUDApp.showHomeView();  // Show main application
+            } catch (IOException e) {  // Handle errors
+                e.printStackTrace();  // Print error details
             }
         } else {
-            errorLabel.setText("Invalid username or password!");
+            errorLabel.setText("Invalid username or password!");  // Show authentication error
         }
     }
-
-    private boolean isValidUser(String username, String password) {
-        String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
-
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setString(1, username);
-            stmt.setString(2, password);
-
-            ResultSet rs = stmt.executeQuery();
-            return rs.next(); // user exists if result set has a row
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
+    
+    private boolean isValidUser(String username, String password) {  // Verify user credentials
+        String sql = "SELECT * FROM users WHERE username = ? AND password = ?";  // Prepare authentication query
+        
+        try (Connection conn = DBConnection.getConnection();  // Connect to database
+             PreparedStatement stmt = conn.prepareStatement(sql)) {  // Create prepared statement
+            
+            stmt.setString(1, username);  // Set username parameter
+            stmt.setString(2, password);  // Set password parameter
+            
+            ResultSet rs = stmt.executeQuery();  // Execute query
+            return rs.next();  // Check results exist
+            
+        } catch (SQLException e) {  // Handle database errors
+            e.printStackTrace();  // Print error details
+            return false;  // Return authentication failure
         }
     }
 }

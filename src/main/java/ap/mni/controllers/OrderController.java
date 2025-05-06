@@ -42,133 +42,138 @@ public class OrderController {
 
     private final ObservableList<Order> ordersList = FXCollections.observableArrayList();
 
-    @FXML
-    public void initialize() {
-        orderIdColumn.setCellValueFactory(cell -> cell.getValue().orderIdProperty());
-        clientNameColumn.setCellValueFactory(cell -> cell.getValue().clientNameProperty());
-        totalPriceColumn.setCellValueFactory(cell -> cell.getValue().totalPriceProperty().asObject());
-        statusColumn.setCellValueFactory(cell -> cell.getValue().statusProperty());
+   @FXML
+public void initialize() {
+    // Connect table columns to Order properties
+    orderIdColumn.setCellValueFactory(cell -> cell.getValue().orderIdProperty());
+    clientNameColumn.setCellValueFactory(cell -> cell.getValue().clientNameProperty());
+    totalPriceColumn.setCellValueFactory(cell -> cell.getValue().totalPriceProperty().asObject());
+    statusColumn.setCellValueFactory(cell -> cell.getValue().statusProperty());
 
-        ordersTable.setItems(ordersList);
+    // Connect data model to table
+    ordersTable.setItems(ordersList);
 
-        statusComboBox.getItems().addAll("Pending", "Shipped", "Delivered", "Canceled");
+    // Setup status options
+    statusComboBox.getItems().addAll("Pending", "Shipped", "Delivered", "Canceled");
 
-        addOrderBtn.setOnAction(e -> addOrder());
-        removeOrderBtn.setOnAction(e -> removeSelectedOrder());
-        clearTableBtn.setOnAction(e -> clearTable());
+    // Setup button actions
+    addOrderBtn.setOnAction(e -> addOrder());
+    removeOrderBtn.setOnAction(e -> removeSelectedOrder());
+    clearTableBtn.setOnAction(e -> clearTable());
 
-        loadOrdersFromDatabase(); // 🔁 Load on init
+    // Load existing data
+    loadOrdersFromDatabase(); // 🔁 Load on init
+}
+
+private void addOrder() {
+    String orderId = orderIdField.getText().trim();  // Get order ID
+    String clientName = clientNameField.getText().trim();  // Get client name
+    String priceText = totalPriceField.getText().trim();  // Get price text
+    String status = statusComboBox.getValue();  // Get order status
+
+    if (orderId.isEmpty() || clientName.isEmpty() || priceText.isEmpty() || status == null) {  // Validate all fields
+        showAlert("Validation Error", "All fields must be filled!", Alert.AlertType.ERROR);  // Show error message
+        return;  // Stop execution
     }
 
-    private void addOrder() {
-        String orderId = orderIdField.getText().trim();
-        String clientName = clientNameField.getText().trim();
-        String priceText = totalPriceField.getText().trim();
-        String status = statusComboBox.getValue();
+    try {
+        double totalPrice = Double.parseDouble(priceText);  // Convert to number
+        Order order = new Order(orderId, clientName, totalPrice, status);  // Create order object
 
-        if (orderId.isEmpty() || clientName.isEmpty() || priceText.isEmpty() || status == null) {
-            showAlert("Validation Error", "All fields must be filled!", Alert.AlertType.ERROR);
-            return;
+        String sql = "INSERT INTO orders (order_id, client_name, total_price, status) VALUES (?, ?, ?, ?)";  // Prepare SQL query
+
+        try (Connection conn = DBConnection.getConnection();  // Get database connection
+             PreparedStatement stmt = conn.prepareStatement(sql)) {  // Create prepared statement
+
+            stmt.setString(1, order.getOrderId());  // Set order ID
+            stmt.setString(2, order.getClientName());  // Set client name
+            stmt.setDouble(3, order.getTotalPrice());  // Set total price
+            stmt.setString(4, order.getStatus());  // Set order status
+            stmt.executeUpdate();  // Execute database insert
+
+            ordersList.add(order);  // Update UI table
+            clearForm();  // Reset form fields
+
+        } catch (SQLException e) {  // Handle SQL errors
+            e.printStackTrace();  // Print error details
+            showAlert("Database Error", "Could not insert order.", Alert.AlertType.ERROR);  // Show database error
         }
 
-        try {
-            double totalPrice = Double.parseDouble(priceText);
-            Order order = new Order(orderId, clientName, totalPrice, status);
-
-            String sql = "INSERT INTO orders (order_id, client_name, total_price, status) VALUES (?, ?, ?, ?)";
-
-            try (Connection conn = DBConnection.getConnection();
-                 PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-                stmt.setString(1, order.getOrderId());
-                stmt.setString(2, order.getClientName());
-                stmt.setDouble(3, order.getTotalPrice());
-                stmt.setString(4, order.getStatus());
-                stmt.executeUpdate();
-
-                ordersList.add(order);
-                clearForm();
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-                showAlert("Database Error", "Could not insert order.", Alert.AlertType.ERROR);
-            }
-
-        } catch (NumberFormatException e) {
-            showAlert("Format Error", "Total Price must be a number.", Alert.AlertType.ERROR);
-        }
+    } catch (NumberFormatException e) {  // Handle format errors
+        showAlert("Format Error", "Total Price must be a number.", Alert.AlertType.ERROR);  // Show format error
     }
+}
 
     private void loadOrdersFromDatabase() {
-        ordersList.clear();
-        String sql = "SELECT * FROM orders";
+    ordersList.clear();  // Reset list
+    String sql = "SELECT * FROM orders";  // Query all orders
 
-        try (Connection conn = DBConnection.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+    try (Connection conn = DBConnection.getConnection();  // Connect to database
+         Statement stmt = conn.createStatement();  // Create SQL statement
+         ResultSet rs = stmt.executeQuery(sql)) {  // Execute and retrieve
 
-            while (rs.next()) {
-                String orderId = rs.getString("order_id");
-                String clientName = rs.getString("client_name");
-                double totalPrice = rs.getDouble("total_price");
-                String status = rs.getString("status");
+        while (rs.next()) {  // Process each row
+            String orderId = rs.getString("order_id");  // Get order ID
+            String clientName = rs.getString("client_name");  // Get client name
+            double totalPrice = rs.getDouble("total_price");  // Get price value
+            String status = rs.getString("status");  // Get order status
 
-                ordersList.add(new Order(orderId, clientName, totalPrice, status));
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void removeSelectedOrder() {
-        Order selected = ordersTable.getSelectionModel().getSelectedItem();
-        if (selected == null) {
-            showAlert("Warning", "No order selected!", Alert.AlertType.WARNING);
-            return;
+            ordersList.add(new Order(orderId, clientName, totalPrice, status));  // Update UI table
         }
 
-        String sql = "DELETE FROM orders WHERE order_id = ?";
+    } catch (SQLException e) {  // Handle errors
+        e.printStackTrace();  // Print error details
+    }
+}
 
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setString(1, selected.getOrderId());
-            stmt.executeUpdate();
-            ordersList.remove(selected);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            showAlert("Error", "Could not delete order.", Alert.AlertType.ERROR);
-        }
+private void removeSelectedOrder() {
+    Order selected = ordersTable.getSelectionModel().getSelectedItem();  // Get selected order
+    if (selected == null) {  // Check selection
+        showAlert("Warning", "No order selected!", Alert.AlertType.WARNING);  // Show warning message
+        return;  // Stop execution
     }
 
-    private void clearTable() {
-        String sql = "DELETE FROM orders";
+    String sql = "DELETE FROM orders WHERE order_id = ?";  // Prepare delete query
 
-        try (Connection conn = DBConnection.getConnection();
-             Statement stmt = conn.createStatement()) {
+    try (Connection conn = DBConnection.getConnection();  // Connect to database
+         PreparedStatement stmt = conn.prepareStatement(sql)) {  // Create prepared statement
 
-            stmt.executeUpdate(sql);
-            ordersList.clear();
+        stmt.setString(1, selected.getOrderId());  // Set order ID
+        stmt.executeUpdate();  // Execute deletion
+        ordersList.remove(selected);  // Update UI table
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    } catch (SQLException e) {  // Handle errors
+        e.printStackTrace();  // Print error details
+        showAlert("Error", "Could not delete order.", Alert.AlertType.ERROR);  // Show error message
     }
+}
 
-    private void clearForm() {
-        orderIdField.clear();
-        clientNameField.clear();
-        totalPriceField.clear();
-        statusComboBox.setValue(null);
+private void clearTable() {
+    String sql = "DELETE FROM orders";  // Delete all query
+    
+    try (Connection conn = DBConnection.getConnection();  // Connect to database
+         Statement stmt = conn.createStatement()) {  // Create SQL statement
+         
+        stmt.executeUpdate(sql);  // Execute deletion
+        ordersList.clear();  // Clear UI table
+        
+    } catch (SQLException e) {  // Handle errors
+        e.printStackTrace();  // Print error details
     }
+}
 
-    private void showAlert(String title, String msg, Alert.AlertType type) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(msg);
-        alert.showAndWait();
-    }
+private void clearForm() {
+    orderIdField.clear();  // Reset ID field
+    clientNameField.clear();  // Reset name field
+    totalPriceField.clear();  // Reset price field
+    statusComboBox.setValue(null);  // Reset status dropdown
+}
+
+private void showAlert(String title, String msg, Alert.AlertType type) {
+    Alert alert = new Alert(type);  // Create alert dialog
+    alert.setTitle(title);  // Set alert title
+    alert.setHeaderText(null);  // Remove header
+    alert.setContentText(msg);  // Set alert message
+    alert.showAndWait();  // Display and wait
+}
 }
